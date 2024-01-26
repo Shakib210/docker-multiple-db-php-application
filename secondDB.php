@@ -3,7 +3,7 @@ header("Content-Type: application/json");
 $method = $_SERVER['REQUEST_METHOD'];
 
 $connectDB1 = mysqli_connect(
-    'db', # service name
+    'secdb', # service name
     'php_docker_student', # username
     'password', # password
     'php_docker_student' # db table
@@ -14,7 +14,7 @@ $table_name = "php_docker_table";
 switch ($method) {
     case 'GET':
         // Retrieve data
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM students";
         $result = mysqli_query($connectDB1, $sql);
 
         $data = array();
@@ -35,7 +35,7 @@ switch ($method) {
         $username = $input['username'];
         $email = $input['email'];
 
-        $sql = "INSERT INTO users (username, email) VALUES ('$username', '$email')";
+        $sql = "INSERT INTO students (username, email) VALUES ('$username', '$email')";
 
         if ($connectDB1->query($sql) === TRUE) {
             echo json_encode(["message" => "Record created successfully"]);
@@ -52,7 +52,7 @@ switch ($method) {
         $username = $input['username'];
         $email = $input['email'];
 
-        $sql = "UPDATE users SET username='$username', email='$email' WHERE id=$id";
+        $sql = "UPDATE students SET username='$username', email='$email' WHERE id=$id";
 
         if ($connectDB1->query($sql) === TRUE) {
             echo json_encode(["message" => "Record updated successfully"]);
@@ -67,7 +67,7 @@ switch ($method) {
 
         $id = $input['id'];
 
-        $sql = "DELETE FROM users WHERE id=$id";
+        $sql = "DELETE FROM students WHERE id=$id";
 
         if ($connectDB1->query($sql) === TRUE) {
             echo json_encode(["message" => "Record deleted successfully"]);

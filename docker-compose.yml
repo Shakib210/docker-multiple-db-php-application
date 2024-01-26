@@ -9,7 +9,16 @@ services:
       - MYSQL_PASSWORD=password
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
     volumes:
-      - "./db:/docker-entrypoint-initdb.d"
+      - "./db/init_db_php_docker.sql:/docker-entrypoint-initdb.d/init_db_php_docker.sql"
+  secdb: 
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=php_docker_student
+      - MYSQL_USER=php_docker_student
+      - MYSQL_PASSWORD=password
+      - MYSQL_ALLOW_EMPTY_PASSWORD=1
+    volumes:
+      - "./db/init_db_php_docker_student.sql:/docker-entrypoint-initdb.d/init_db_php_docker_student.sql"
   web:
     build:
       context: .
@@ -17,10 +26,12 @@ services:
       - "8080:80"
     depends_on:
       - db
+      - secdb
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
       - 8001:80
     environment:
       - PMA_HOST=db
+      - PMA_HOST_secdb=secdb
       - PMA_PORT=3306
