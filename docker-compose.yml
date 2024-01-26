@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  db: 
+  db:
     image: mysql:latest
     environment:
       - MYSQL_DATABASE=php_docker
@@ -9,8 +9,8 @@ services:
       - MYSQL_PASSWORD=password
       - MYSQL_ALLOW_EMPTY_PASSWORD=1
     volumes:
-      - "./db/init_db_php_docker.sql:/docker-entrypoint-initdb.d/init_db_php_docker.sql"
-  secdb: 
+      - "./db:/docker-entrypoint-initdb.d" # - "./db/init_db_php_docker.sql:/docker-entrypoint-initdb.d/init_db_php_docker.sql"
+  secdb:
     image: mysql:latest
     environment:
       - MYSQL_DATABASE=php_docker_student
